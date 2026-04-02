@@ -33,3 +33,20 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(3000);
+
+## Status
+- Day 1 complete ✅
+- Day 2 complete ✅
+
+## Day 2 — Routing System
+
+### What was built
+- Custom Router class
+- Route registration system
+- Method + path matching
+- 404 fallback handling
+
+### Key Concepts Learned
+- How routing works internally
+- How frameworks map requests to handlers
+- Separation of concerns (server vs router)
