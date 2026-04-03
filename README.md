@@ -50,3 +50,18 @@ server.listen(3000);
 - How routing works internally
 - How frameworks map requests to handlers
 - Separation of concerns (server vs router)
+
+
+## Status
+- Day 1 ✅ Basic HTTP server
+- Day 2 ✅ Routing system
+- Day 3 ✅ Response helpers
+
+## Day 2 — Routing System abstraction
+
+## Features
+- Custom router (method + path matching)
+- Response abstraction:
+  - `res.send()`
+  - `res.json()`
+  - `res.status()`
