@@ -1,27 +1,33 @@
-// making a class for the router to essentially handle methods, urls and executions
-class Router {
+// Makeing a class to handle routes by assigning them to methods and url that exist then execute them
+class Router{
+
     constructor(){
-        
+        // A list to save the routes for assignment
         this.routes = []
     }
-            // this contains methods, url and response
+
+    // A function to register the route parameters
     register(method, path, handler){
         this.routes.push({method, path, handler})
     }
-    // In this we get to handle each of the route objects if we have the method and url
+
+    // A function to assign to routes by looping to the right one and responding 404 if not found
+
     handle(req, res){
-        const {method, url} = req;
+        // deconstruct the req to get params
+        const {method, url} = req
 
         for(const route of this.routes){
-            if(route.method === method && route.path === url){
-                return route.handler(req, res);
+            if(route.method == method && route.path === url){
+                return route.handler(req, res)
             }
         }
-        // 404 fallback incase route not found
-    res.statusCode = 404;
-    res.end("Not Found");
+        // 404 fall back
+        res.statusCode = 404
+        res.end("Route not found")
+
     }
-    
+
 }
 
-export default Router;
+export default Router
