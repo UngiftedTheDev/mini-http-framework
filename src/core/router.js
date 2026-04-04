@@ -1,4 +1,4 @@
-// Makeing a class to handle routes by assigning them to methods and url that exist then execute them
+// Making a class to handle routes by assigning them to methods and url that exist then execute them
 class Router{
 
     constructor(){
@@ -23,8 +23,7 @@ class Router{
             }
         }
         // 404 fall back
-        res.statusCode = 404
-        res.end("Route not found")
+    res.status(404).send("Route not found");
 
     }
 
