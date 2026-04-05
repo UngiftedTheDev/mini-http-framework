@@ -65,3 +65,17 @@ server.listen(3000);
   - `res.send()`
   - `res.json()`
   - `res.status()`
+
+- Day 3 ✅ Response helpers
+- Day 4 ✅ Middleware system
+
+## Features
+- Custom router (method + path matching)
+- Response abstraction:
+  - `res.send()`
+  - `res.json()`
+  - `res.status()`
+- Middleware support:
+  - `app.use()`
+  - `next()` flow
+  - Request blocking (e.g. `/blocked → 403`)
