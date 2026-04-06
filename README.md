@@ -79,3 +79,17 @@ server.listen(3000);
   - `app.use()`
   - `next()` flow
   - Request blocking (e.g. `/blocked → 403`)
+
+  ## Status
+- Day 1 ✅ Basic HTTP server
+- Day 2 ✅ Routing system
+- Day 3 ✅ Response helpers
+- Day 4 ✅ Middleware system
+- Day 5 ✅ JSON body parsing (request streams)
+- Day 6 ✅ Centralized error handling and router cleanup
+
+## New Additions
+- Request body parsing using streams (`req.body`)
+- Safe JSON handling with error responses (400)
+- Centralized error handling (500)
+- Proper 404 handling outside the router
