@@ -32,7 +32,9 @@ app.post("/login", (req, res)=> {
         body: req.body
     })
 })
-
+ app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
 
 
 app.listen(3000)

@@ -1,38 +1,33 @@
 # Mini HTTP Framework
 
-A step-by-step implementation of a minimal HTTP framework in Node.js, built from scratch to understand how tools like Express work internally. This is tp help me actualize the concepte from the book i am now reading called "Computer networking A Top-down Approach"
+A lightweight HTTP framework built from scratch in Node.js to understand how frameworks like Express work internally.
 
-## Day 1 — Basic HTTP Server
+## What it demonstrates
+- HTTP request/response lifecycle
+- Custom routing system
+- Middleware pipeline with `next()` flow
+- Request body parsing using streams
+- Response abstraction (`send`, `json`, `status`)
+- Centralized error handling (404 & 500)
+- Express-like API (`app.get`, `app.post`, `app.use`)
 
-### What was built
-- Raw HTTP server using Node.js `http` module
-- Basic route handling using `req.url`
-- Logging of incoming requests (`method` and `url`)
-- Simple response handling with `res.end()`
-
-### Key Concepts Learned
-- How Node.js handles HTTP requests and responses
-- The role of `req` and `res`
-- The lifecycle of a request
-- Difference between raw Node HTTP and frameworks like Express
-
-### Example
+## Example
 
 ```js
-import http from "http";
+import createApp from "./src/index.js";
 
-const server = http.createServer((req, res) => {
-  console.log(`${req.method} ${req.url}`);
+const app = createApp();
 
-  if (req.url === "/") {
-    res.end("Hello World");
-    return;
-  }
-
-  res.end("Route not found");
+app.use((req, res, next) => {
+  console.log(req.method, req.url);
+  next();
 });
 
-server.listen(3000);
+app.get("/", (req, res) => {
+  res.send("Hello from custom framework");
+});
+
+app.listen(3000);
 
 ## Status
 - Day 1 complete ✅
