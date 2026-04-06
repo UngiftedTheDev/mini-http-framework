@@ -23,7 +23,7 @@ class Router{
             }
         }
         // 404 fall back
-    res.status(404).send("Route not found");
+    return null;
 
     }
 

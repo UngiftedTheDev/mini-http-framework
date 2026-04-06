@@ -1,28 +1,28 @@
-const parseJson = (req)=> {
-    return new Promise((resolve, reject)=> {
-        let body = "";
+
+const parseJson= (req)=> {
+    return new Promise ((resolve, reject)=> {
+        let body = ""
 
         req.on("data", (chunk)=> {
-            body += chunk.toString();
+            body += chunk;
         })
 
         req.on("end", ()=> {
             if(!body){
-                return resolve({});
+                return resolve({})
             }
             try {
                 const parsed = JSON.parse(body);
-                resolve(parsed);
+                resolve(parsed)
+                
             } catch (error) {
                 reject(new Error("Invalid JSON"))
             }
         })
         req.on("error", (err)=> {
-            reject(err)
+            resolve(err)
         })
-
-
     })
 }
 
-export default parseJson
+export default parseJson;

@@ -3,6 +3,7 @@ import Router from "./router.js"
 import Response from "../http/response.js";
 import MiddlewareManager from "./middleware.js";
 import parseJson from "../http/parser.js";
+import { notFound, handleError } from "./errors.js";
 
 const router = new Router();
 const middleware = new MiddlewareManager()
@@ -43,7 +44,8 @@ router.register("POST", "/nlocked", (req, res)=> {
 
 const server = http.createServer( async(req, res)=> {
     const response = new Response(res);
-    console.log(req.method, req.url)
+   try {
+     console.log(req.method, req.url)
     if(req.method === "POST" || req.method === "PUT"){
         try {
             req.body = await parseJson(req)
@@ -52,9 +54,16 @@ const server = http.createServer( async(req, res)=> {
         }
     }
 
-   middleware.run(req, response, ()=> { // run midd;ewares first before final route handle
-     router.handle(req, response);
+   middleware.run(req, response, ()=> { // run middlewares first before final route handle
+     const result = router.handle(req, response);
+     if(result === null){
+        return notFound(req, response)
+     }
    })
+
+   } catch (error) {
+        handleError(error, req, res)
+   }
 })
 
 server.listen(3000, () => {
