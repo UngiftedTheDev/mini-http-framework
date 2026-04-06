@@ -4,68 +4,35 @@ import Response from "../http/response.js";
 import MiddlewareManager from "./middleware.js";
 import parseJson from "../http/parser.js";
 import { notFound, handleError } from "./errors.js";
+import App from "./app.js";
 
-const router = new Router();
-const middleware = new MiddlewareManager()
+const app = new App()
 
-//register Middlewares
-
-middleware.use((req, res, next)=> {
-    req.startTime = Date.now();
-    next();
-})
-//locking middleware
-middleware.use((req, res, next)=> {
+//middleware
+app.use((req, res, next)=> {
+    console.log(`${req.method} ${req.url}`)
     if(req.url === "/blocked"){
-        res.status(403).send("Forbidden")
-        return;
+        res.status(403).json({message: "Unauthorized"})
+        return
     }
     next()
 })
 
+//routes
 
-//Register routes
-router.register("GET", "/", (req, res)=> {
-    res.status(200).send("<h1>Hello this is the homepage</h1>")
+app.get("/home", (req, res)=> {
+    res.send("<h1> Welcome to the Homepage </h1>")
 })
-router.register("GET", "/users", (req, res)=> {
-    res.send({users: ["Tom", "Olivia"]})
+
+app.get("/blocked", (req, res)=> {
+    res.send("You should not be seeing this")
 })
-router.register("POST", "/login", (req, res) => {
-  res.json({
-    message: "Login received",
-    data: req.body,
-  });
-});
-router.register("POST", "/nlocked", (req, res)=> {
-    res.send("<h1>You should not be seeing this blocked page</h1>")
+app.post("/login", (req, res)=> {
+    res.json({
+        body: req.body
+    })
 })
 
 
-const server = http.createServer( async(req, res)=> {
-    const response = new Response(res);
-   try {
-     console.log(req.method, req.url)
-    if(req.method === "POST" || req.method === "PUT"){
-        try {
-            req.body = await parseJson(req)
-        } catch (error) {
-            return response.status(400).json({error: "Invalid JSON"})
-        }
-    }
 
-   middleware.run(req, response, ()=> { // run middlewares first before final route handle
-     const result = router.handle(req, response);
-     if(result === null){
-        return notFound(req, response)
-     }
-   })
-
-   } catch (error) {
-        handleError(error, req, res)
-   }
-})
-
-server.listen(3000, () => {
-  console.log("Server running on port 3000");
-});
+app.listen(3000)

@@ -93,3 +93,6 @@ server.listen(3000);
 - Safe JSON handling with error responses (400)
 - Centralized error handling (500)
 - Proper 404 handling outside the router
+
+- Day 7 ✅ App layer (Express-like API)
+- Final day to clean up server.js and abstract all the functions like express
